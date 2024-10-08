@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Commerce</title>
     <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="style/products.css">
     <script src="scripts/main.js"></script>
 </head>
 <body>
-    <img src="assets/LOGO-HCS-FINAL-VECTOR.svg" alt="Logo" width="50vw"></img>
     <div>
-        This text should be Poppins
+        <label for="category-select">Choose a category:</label>
+        <select id="category-select" onchange="changeCategory()">
+            <option value="all">All</option>
+            <option value="smartphones">Smartphones</option>
+            <option value="laptops">Laptops</option>
+            <option value="fragrances">Fragrances</option>
+        </select>
     </div>
+
+    <div id="product-container"></div>
+
+    <script src="scripts/fetch-products.js"></script>
 </body>
 </html>
