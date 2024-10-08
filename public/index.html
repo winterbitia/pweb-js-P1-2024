@@ -9,25 +9,25 @@
     <script src="scripts/main.js"></script>
 </head>
 <body>
-    <!-- category Dropdown -->
+    <!-- Category Dropdown -->
     <div>
         <label for="category-select">Choose a category:</label>
         <select id="category-select" onchange="changeCategory()">
             <option value="all">All</option>
             <option value="smartphones">Smartphones</option>
-            <option value="laptops">Laptops</option>
-            <option value="fragrances">Fragrances</option>
+            <option value="groceries">Groceries</option>
+            <option value="kitchen-accessories">Kitchen Accessories</option>
         </select>
     </div>
 
     <!-- Limit Dropdown -->
     <div>
-        <label for="limit-select">Items per page:</label>
+        <label for="limit-select">Items per category:</label>
         <select id="limit-select" onchange="changeLimit()">
+            <option value="3">3</option>
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="15">15</option>
-            <option value="20">20</option>
         </select>
     </div>
 

@@ -5,7 +5,7 @@ async function fetchProduct(category, limit = 5) {
         // Check if the user selected "All Categories"
         if (category === 'all') {
             // Fetch from all categories
-            const categories = ['smartphones', 'laptops', 'fragrances']; // Add more categories as needed
+            const categories = ['smartphones', 'groceries', 'kitchen-accessories']; // Add more categories as needed
             const categoryPromises = categories.map(cat =>
                 fetch(`https://dummyjson.com/products/category/${cat}?limit=${limit}`)
                     .then(response => {
@@ -65,7 +65,7 @@ async function fetchProduct(category, limit = 5) {
 
 // Default values
 let category = 'all';
-let limit = 5;
+let limit = 3;
 
 // Function to handle the category change
 function changeCategory() {
