@@ -59,6 +59,7 @@ function generateProductHTML(products) {
 // Default values
 let category = 'all';
 let limit = 3;
+let cart = JSON.parse(localStorage.getItem('cart')) || {};
 
 // Function to handle the category change
 function changeCategory() {
@@ -76,10 +77,74 @@ function changeLimit() {
     });
 }
 
+// Function to add an item to the cart
+function addToCart(id, title, price) {
+    if (cart[id]) {
+        cart[id].quantity += 1;
+    } else {
+        cart[id] = { title, price, quantity: 1 };
+    }
+    updateCart();
+}
+
+// Function to remove an item from the cart
+function removeFromCart(id) {
+    delete cart[id];
+    updateCart();
+}
+
+// Function to increment the quantity of an item
+function incrementItem(id) {
+    cart[id].quantity += 1;
+    updateCart();
+}
+
+// Function to decrement the quantity of an item
+function decrementItem(id) {
+    if (cart[id].quantity > 1) {
+        cart[id].quantity -= 1;
+    } else {
+        removeFromCart(id);
+    }
+    updateCart();
+}
+
+// Function to update the cart in local storage and render it
+function updateCart() {
+    localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to local storage
+    renderCart();
+}
+
+// Function to render the cart
+function renderCart() {
+    const cartContainer = document.getElementById('cart-container');
+    let cartHTML = '';
+
+    if (Object.keys(cart).length === 0) {
+        cartHTML = '<p>Your cart is empty.</p>';
+    } else {
+        cartHTML = Object.keys(cart).map(id => `
+            <div class="cart-item">
+                <h3>${cart[id].title}</h3>
+                <p>Price: $${cart[id].price}</p>
+                <p>Quantity: 
+                    <button onclick="decrementItem(${id})">-</button> 
+                    ${cart[id].quantity} 
+                    <button onclick="incrementItem(${id})">+</button>
+                </p>
+                <button onclick="removeFromCart(${id})">Remove</button>
+            </div>
+        `).join('');
+    }
+
+    cartContainer.innerHTML = cartHTML;
+}
+
 // Initial render for "All Categories"
 document.addEventListener('DOMContentLoaded', () => {
     // Load all categories by default
     fetchProduct(category, limit).then(html => {
         document.getElementById('product-container').innerHTML = html;
     });
+    renderCart();
 });
