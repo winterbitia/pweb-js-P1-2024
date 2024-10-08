@@ -140,6 +140,38 @@ function renderCart() {
     cartContainer.innerHTML = cartHTML;
 }
 
+// Function to handle the checkout process
+function checkout() {
+    let totalItems = 0;
+    let totalPrice = 0;
+
+    // Iterate through the cart and calculate totals
+    Object.keys(cart).forEach(id => {
+        totalItems += cart[id].quantity;
+        totalPrice += cart[id].price * cart[id].quantity;
+    });
+
+    // Display the checkout summary
+    const checkoutContainer = document.getElementById('checkout-container');
+    checkoutContainer.innerHTML = `
+        <div class="checkout-summary">
+            <h2>Checkout Summary</h2>
+            <p>Total Items: ${totalItems}</p>
+            <p>Total Price: $${totalPrice.toFixed(2)}</p>
+            <button onclick="completePurchase()">Complete Purchase</button>
+        </div>
+    `;
+}
+
+// Function to complete the purchase (placeholder)
+function completePurchase() {
+    alert('Thank you for your purchase!');
+    cart = {}; // Clear the cart
+    updateCart(); // Update the cart UI
+    localStorage.removeItem('cart'); // Clear local storage
+    document.getElementById('checkout-container').innerHTML = ''; // Clear checkout display
+}
+
 // Initial render for "All Categories"
 document.addEventListener('DOMContentLoaded', () => {
     // Load all categories by default
