@@ -21,18 +21,7 @@ async function fetchProduct(category, limit = 5) {
             const categoryResults = await Promise.all(categoryPromises);
             const allProducts = categoryResults.flat(); // Combine products into a single list
 
-            // Generate HTML for all products
-            let productHTML = allProducts.map(product => `
-                <div class="product">
-                    <h2>${product.title}</h2>
-                    <img src="${product.thumbnail}" alt="${product.title}">
-                    <p>${product.description}</p>
-                    <p>Price: $${product.price}</p>
-                    <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
-                </div>
-            `).join('');
-
-            return productHTML;
+            return generateProductHTML(allProducts);
 
         } else {
             // Fetch products for a specific category
@@ -44,23 +33,27 @@ async function fetchProduct(category, limit = 5) {
             const data = await response.json();
             const products = data.products;
             
-            // Generate HTML for each product
-            let productHTML = products.map(product => `
-                <div class="product">
-                    <h2>${product.title}</h2>
-                    <img src="${product.thumbnail}" alt="${product.title}">
-                    <p>${product.description}</p>
-                    <p>Price: $${product.price}</p>
-                    <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
-                </div>
-                `).join('');
-                
-                return productHTML;
-            }
+            return generateProductHTML(products);
+        }
     } catch (error) {
         console.error('Error fetching products:', error);
         return `<p>Error fetching products. Please try again later.</p>`;
     }
+}
+
+// Extracted function to generate HTML for products
+function generateProductHTML(products) {
+    let productHTML = products.map(product => `
+        <div class="product">
+            <h2>${product.title}</h2>
+            <img src="${product.thumbnail}" alt="${product.title}">
+            <p>${product.category}</p>
+            <p>Price: $${product.price}</p>
+            <button class="add-to-cart" onclick="addToCart(${product.id}, '${product.title}', ${product.price})">Add to Cart</button>
+        </div>
+    `).join('');
+
+    return productHTML;
 }
 
 // Default values
