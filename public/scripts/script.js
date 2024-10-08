@@ -1,3 +1,7 @@
+let category = 'all'; // Default category
+let limit = 3; // Default limit
+let cart = JSON.parse(localStorage.getItem('cart')) || {}; // Load cart from local storage
+
 async function fetchProduct(category, limit = 5) {
     try {
         let url = '';
@@ -5,7 +9,7 @@ async function fetchProduct(category, limit = 5) {
         // Check if the user selected "All Categories"
         if (category === 'all') {
             // Fetch from all categories
-            const categories = ['smartphones', 'groceries', 'kitchen-accessories']; // Add more categories as needed
+            const categories = ['smartphones', 'groceries', 'kitchen-accessories']; 
             const categoryPromises = categories.map(cat =>
                 fetch(`https://dummyjson.com/products/category/${cat}?limit=${limit}`)
                     .then(response => {
@@ -21,6 +25,7 @@ async function fetchProduct(category, limit = 5) {
             const categoryResults = await Promise.all(categoryPromises);
             const allProducts = categoryResults.flat(); // Combine products into a single list
 
+            // Call result from generateProductHTML
             return generateProductHTML(allProducts);
 
         } else {
@@ -33,6 +38,7 @@ async function fetchProduct(category, limit = 5) {
             const data = await response.json();
             const products = data.products;
             
+            // Call result from generateProductHTML
             return generateProductHTML(products);
         }
     } catch (error) {
@@ -46,8 +52,8 @@ function generateProductHTML(products) {
     let productHTML = products.map(product => `
         <div class="product">
             <h2>${product.title}</h2>
-            <img src="${product.thumbnail}" alt="${product.title}">
-            <p>${product.category}</p>
+            <img src="${product.thumbnail}" alt="${product.title}" width="90vw">
+            <p>Category: ${product.category}</p>
             <p>Price: $${product.price}</p>
             <button class="add-to-cart" onclick="addToCart(${product.id}, '${product.title}', ${product.price})">Add to Cart</button>
         </div>
@@ -55,11 +61,6 @@ function generateProductHTML(products) {
 
     return productHTML;
 }
-
-// Default values
-let category = 'all';
-let limit = 3;
-let cart = JSON.parse(localStorage.getItem('cart')) || {};
 
 // Function to handle the category change
 function changeCategory() {
@@ -172,7 +173,7 @@ function completePurchase() {
     document.getElementById('checkout-container').innerHTML = ''; // Clear checkout display
 }
 
-// Initial render for "All Categories"
+// Initial render
 document.addEventListener('DOMContentLoaded', () => {
     // Load all categories by default
     fetchProduct(category, limit).then(html => {
