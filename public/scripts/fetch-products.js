@@ -63,12 +63,21 @@ async function fetchProduct(category, limit = 5) {
     }
 }
 
+// Default values
 let category = 'all';
 let limit = 5;
 
 // Function to handle the category change
 function changeCategory() {
     category = document.getElementById('category-select').value; // Get the selected category
+    fetchProduct(category, limit).then(html => {
+        document.getElementById('product-container').innerHTML = html;
+    });
+}
+
+// Function to handle the limit change
+function changeLimit() {
+    limit = parseInt(document.getElementById('limit-select').value, 10); // Get the new limit
     fetchProduct(category, limit).then(html => {
         document.getElementById('product-container').innerHTML = html;
     });

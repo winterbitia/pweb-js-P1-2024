@@ -9,6 +9,7 @@
     <script src="scripts/main.js"></script>
 </head>
 <body>
+    <!-- category Dropdown -->
     <div>
         <label for="category-select">Choose a category:</label>
         <select id="category-select" onchange="changeCategory()">
@@ -19,6 +20,18 @@
         </select>
     </div>
 
+    <!-- Limit Dropdown -->
+    <div>
+        <label for="limit-select">Items per page:</label>
+        <select id="limit-select" onchange="changeLimit()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+    </div>
+
+    <!-- Main Product Catalog Div -->
     <div id="product-container"></div>
 
     <script src="scripts/fetch-products.js"></script>
