@@ -161,6 +161,7 @@ function renderCart() {
         }
 
         cartContainer.innerHTML = cartHTML;
+        checkout();
     } catch (error) {
         console.error('Error rendering cart:', error);
     }
