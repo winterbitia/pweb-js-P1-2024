@@ -32,7 +32,8 @@ async function fetchProduct(category, limit = 5) {
             }
             const data = await response.json();
             const products = data.products;
-            
+
+            return generateProductHTML(products);
         }
     } catch (error) {
         console.error('Error fetching products:', error);
