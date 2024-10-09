@@ -1,14 +1,12 @@
-let category = 'all'; // Default category
-let limit = 3; // Default limit
-let cart = JSON.parse(localStorage.getItem('cart')) || {}; // Load cart from local storage
+let category = 'all';
+let limit = 3;
+let cart = JSON.parse(localStorage.getItem('cart')) || {}; 
 
 async function fetchProduct(category, limit = 5) {
     try {
         let url = '';
 
-        // Check if the user selected "All Categories"
         if (category === 'all') {
-            // Fetch from all categories
             const categories = ['smartphones', 'groceries', 'kitchen-accessories']; 
             const categoryPromises = categories.map(cat =>
                 fetch(`https://dummyjson.com/products/category/${cat}?limit=${limit}`)
@@ -21,15 +19,12 @@ async function fetchProduct(category, limit = 5) {
                     .then(data => data.products)
             );
 
-            // Wait for all promises and merge products from all categories
             const categoryResults = await Promise.all(categoryPromises);
-            const allProducts = categoryResults.flat(); // Combine products into a single list
+            const allProducts = categoryResults.flat();
 
-            // Call result from generateProductHTML
             return generateProductHTML(allProducts);
 
         } else {
-            // Fetch products for a specific category
             url = `https://dummyjson.com/products/category/${category}?limit=${limit}`;
             const response = await fetch(url);
             if (!response.ok) {
@@ -38,8 +33,6 @@ async function fetchProduct(category, limit = 5) {
             const data = await response.json();
             const products = data.products;
             
-            // Call result from generateProductHTML
-            return generateProductHTML(products);
         }
     } catch (error) {
         console.error('Error fetching products:', error);
@@ -47,7 +40,6 @@ async function fetchProduct(category, limit = 5) {
     }
 }
 
-// Function to generate HTML for products
 function generateProductHTML(products) {
     try {
         let productHTML = products.map(product => `
@@ -67,10 +59,9 @@ function generateProductHTML(products) {
     }
 }
 
-// Function to handle category change
 function changeCategory() {
     try {
-        category = document.getElementById('category-select').value; // Get the selected category
+        category = document.getElementById('category-select').value; 
         fetchProduct(category, limit).then(html => {
             document.getElementById('product-container').innerHTML = html;
         }).catch(error => {
@@ -81,10 +72,9 @@ function changeCategory() {
     }
 }
 
-// Function to handle limit change
 function changeLimit() {
     try {
-        limit = parseInt(document.getElementById('limit-select').value, 10); // Get the new limit
+        limit = parseInt(document.getElementById('limit-select').value, 10); 
         fetchProduct(category, limit).then(html => {
             document.getElementById('product-container').innerHTML = html;
         }).catch(error => {
@@ -95,7 +85,6 @@ function changeLimit() {
     }
 }
 
-// Function to add an item to the cart
 function addToCart(id, title, price) {
     try {
         if (cart[id]) {
@@ -109,7 +98,6 @@ function addToCart(id, title, price) {
     }
 }
 
-// Function to remove an item from the cart
 function removeFromCart(id) {
     try {
         delete cart[id];
@@ -119,7 +107,6 @@ function removeFromCart(id) {
     }
 }
 
-// Function to increment the quantity of an item
 function incrementItem(id) {
     try {
         cart[id].quantity += 1;
@@ -129,7 +116,6 @@ function incrementItem(id) {
     }
 }
 
-// Function to decrement the quantity of an item
 function decrementItem(id) {
     try {
         if (cart[id].quantity > 1) {
@@ -143,17 +129,15 @@ function decrementItem(id) {
     }
 }
 
-// Function to update the cart in local storage and render it
 function updateCart() {
     try {
-        localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to local storage
+        localStorage.setItem('cart', JSON.stringify(cart)); 
         renderCart();
     } catch (error) {
         console.error('Error updating cart:', error);
     }
 }
 
-// Function to render the cart
 function renderCart() {
     try {
         const cartContainer = document.getElementById('cart-container');
@@ -182,19 +166,16 @@ function renderCart() {
     }
 }
 
-// Function to handle the checkout process
 function checkout() {
     try {
         let totalItems = 0;
         let totalPrice = 0;
 
-        // Iterate through the cart and calculate totals
         Object.keys(cart).forEach(id => {
             totalItems += cart[id].quantity;
             totalPrice += cart[id].price * cart[id].quantity;
         });
 
-        // Display the checkout summary
         const checkoutContainer = document.getElementById('checkout-container');
         checkoutContainer.innerHTML = `
             <div class="checkout-summary">
@@ -209,23 +190,20 @@ function checkout() {
     }
 }
 
-// Function to complete the purchase (placeholder)
 function completePurchase() {
     try {
         alert('Thank you for your purchase!');
-        cart = {}; // Clear the cart
-        updateCart(); // Update the cart UI
-        localStorage.removeItem('cart'); // Clear local storage
-        document.getElementById('checkout-container').innerHTML = ''; // Clear checkout display
+        cart = {}; 
+        updateCart(); 
+        localStorage.removeItem('cart'); 
+        document.getElementById('checkout-container').innerHTML = ''; 
     } catch (error) {
         console.error('Error completing purchase:', error);
     }
 }
 
-// Initial render
 document.addEventListener('DOMContentLoaded', () => {
     try {
-        // Load all categories by default
         fetchProduct(category, limit).then(html => {
             document.getElementById('product-container').innerHTML = html;
         });
