@@ -1,7 +1,44 @@
+.checkout-summary, .cart-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.checkout-summary h2, .cart-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.checkout-summary p, .cart-item p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.checkout-summary button, .cart-item button {
+  background-color: #f0c14b;
+  border: 1px solid #a88734;
+  border-radius: 5px;
+  color: #111;
+  cursor: pointer;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-summary button:hover, .cart-item button:hover {
+  background-color: #ffa41c;
+}
+
 #checkout-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
+  flex-direction: column; /* memastikan semua elemen dalam kolom */
+  align-items: center;     /* mengatur elemen di tengah secara horizontal */
+  justify-content: center; /* jika ingin di tengah secara vertikal juga */
+  min-height: 100vh;       /* agar seluruh container checkout berada di tengah secara vertikal pada layar */
 }
 
 .checkout-summary {

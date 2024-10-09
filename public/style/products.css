@@ -2,6 +2,13 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 20px;
+}
+
+#items-header {
+  text-align: center; /* untuk menyelaraskan teks ke tengah */
+  font-size: 2rem;    /* opsional, untuk ukuran font yang lebih besar */
+  margin: 20px 0;     /* opsional, untuk memberikan margin */
 }
 
 .product {
@@ -13,6 +20,7 @@
     border-radius: 5px;
 
     text-align: center;
+    width: 250px;
 }
 
 .add-to-cart {
@@ -24,4 +32,14 @@
     border-radius: 5px;
 
     text-align: center;
-}
+
+    background-color: #f0c14b;
+    border: 1px solid #a88734;
+    border-radius: 5px;
+    color: #111;
+    text-align: center;
+    cursor: pointer;
+
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+} 
+
