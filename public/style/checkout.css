@@ -35,14 +35,14 @@
 
 #checkout-container {
   display: flex;
-  flex-direction: column; /* memastikan semua elemen dalam kolom */
-  align-items: center;     /* mengatur elemen di tengah secara horizontal */
-  justify-content: center; /* jika ingin di tengah secara vertikal juga */
-  min-height: 100vh;       /* agar seluruh container checkout berada di tengah secara vertikal pada layar */
+  flex-direction: column; 
+  align-items: center;     
+  justify-content: center; 
+  min-height: 40vh;       
 }
 
 .checkout-summary {
-    margin: 10px;
+    margin: 5px;
     padding: 10px;
     width: 300px;
 

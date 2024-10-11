@@ -6,9 +6,9 @@
 }
 
 #items-header {
-  text-align: center; /* untuk menyelaraskan teks ke tengah */
-  font-size: 2rem;    /* opsional, untuk ukuran font yang lebih besar */
-  margin: 20px 0;     /* opsional, untuk memberikan margin */
+  text-align: center; 
+  font-size: 2rem;    
+  margin: 20px 0;     
 }
 
 .product {
