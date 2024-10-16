@@ -4,10 +4,9 @@ let cart = JSON.parse(localStorage.getItem('cart')) || {};
 
 async function fetchProduct(category, limit = 5) {
     try {
-        let url = '';
-
         if (category === 'all') {
-            const categories = ['smartphones', 'groceries', 'kitchen-accessories']; 
+            const categories = ['smartphones', 'groceries', 'kitchen-accessories'];
+
             const categoryPromises = categories.map(cat =>
                 fetch(`https://dummyjson.com/products/category/${cat}?limit=${limit}`)
                     .then(response => {
@@ -20,15 +19,11 @@ async function fetchProduct(category, limit = 5) {
             );
 
             const categoryResults = await Promise.all(categoryPromises);
-            const allProducts = categoryResults.flat(); // Gabungkan semua produk
+            const allProducts = categoryResults.flat(); // Gabungkan semua produk dari setiap kategori
 
-            // Lakukan limitasi terhadap jumlah produk yang akan ditampilkan
-            const limitedProducts = allProducts.slice(0, limit);
-
-            return generateProductHTML(limitedProducts);
-
+            return generateProductHTML(allProducts);
         } else {
-            url = `https://dummyjson.com/products/category/${category}?limit=${limit}`;
+            const url = `https://dummyjson.com/products/category/${category}?limit=${limit}`;
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
