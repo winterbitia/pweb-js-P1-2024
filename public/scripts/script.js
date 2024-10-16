@@ -20,9 +20,12 @@ async function fetchProduct(category, limit = 5) {
             );
 
             const categoryResults = await Promise.all(categoryPromises);
-            const allProducts = categoryResults.flat();
+            const allProducts = categoryResults.flat(); // Gabungkan semua produk
 
-            return generateProductHTML(allProducts);
+            // Lakukan limitasi terhadap jumlah produk yang akan ditampilkan
+            const limitedProducts = allProducts.slice(0, limit);
+
+            return generateProductHTML(limitedProducts);
 
         } else {
             url = `https://dummyjson.com/products/category/${category}?limit=${limit}`;
@@ -194,7 +197,7 @@ function checkout() {
 
 function completePurchase() {
     try {
-        alert('Thank you for your purchase!');
+        alert('Yeayyy Selamat Self Reward🥰');
         cart = {}; 
         updateCart(); 
         localStorage.removeItem('cart'); 
@@ -205,12 +208,11 @@ function completePurchase() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    try {
-        fetchProduct(category, limit).then(html => {
-            document.getElementById('product-container').innerHTML = html;
-        });
-        renderCart();
-    } catch (error) {
-        console.error('Error during initial render:', error);
-    }
+    fetchProduct(category, limit).then(html => {
+        document.getElementById('product-container').innerHTML = html;
+    }).catch(error => {
+        console.error('Error fetching products on page load:', error);
+    });
+
+    renderCart(); 
 });
