@@ -8,7 +8,7 @@ async function fetchProduct(category, limit = 5) {
             const categories = ['smartphones', 'groceries', 'kitchen-accessories'];
 
             const categoryPromises = categories.map(cat =>
-                fetch(`https://dummyjson.com/products/category/${cat}?limit=${limit}`)
+                fetch(`https://dummyjson.com/products/category/${cat}?limit=${limt}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -19,11 +19,11 @@ async function fetchProduct(category, limit = 5) {
             );
 
             const categoryResults = await Promise.all(categoryPromises);
-            const allProducts = categoryResults.flat(); // Gabungkan semua produk dari setiap kategori
+            const allProducts = categoryResults.flat();
 
             return generateProductHTML(allProducts);
         } else {
-            const url = `https://dummyjson.com/products/category/${category}?limit=${limit}`;
+            const url = `https://dummyjson.com/products/category/${category}?limit=${limi}`;
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
